@@ -1,0 +1,76 @@
+#! /usr/bin/vvp
+:ivl_version "10.3 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "system";
+:vpi_module "vhdl_sys";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_0x561eb71b4860 .scope module, "rom_tb" "rom_tb" 2 1;
+ .timescale 0 0;
+v0x561eb71c55c0_0 .var "addr", 20 0;
+v0x561eb71c56b0_0 .var "clk", 0 0;
+v0x561eb71c5780_0 .net "pixdata", 11 0, v0x561eb71c53c0_0;  1 drivers
+S_0x561eb717e030 .scope module, "rom1" "rom" 2 7, 3 1 0, S_0x561eb71b4860;
+ .timescale 0 0;
+    .port_info 0 /OUTPUT 12 "pixdata"
+    .port_info 1 /INPUT 21 "addr"
+    .port_info 2 /INPUT 1 "clk"
+v0x561eb717e250_0 .net "addr", 20 0, v0x561eb71c55c0_0;  1 drivers
+v0x561eb71c5300_0 .net "clk", 0 0, v0x561eb71c56b0_0;  1 drivers
+v0x561eb71c53c0_0 .var "pixdata", 11 0;
+v0x561eb71c5480 .array "romdata", 307199 0, 11 0;
+E_0x561eb71b5270 .event negedge, v0x561eb71c5300_0;
+    .scope S_0x561eb717e030;
+T_0 ;
+    %vpi_call 3 10 "$readmemb", "image.bin", v0x561eb71c5480 {0 0 0};
+    %end;
+    .thread T_0;
+    .scope S_0x561eb717e030;
+T_1 ;
+    %wait E_0x561eb71b5270;
+    %ix/getv 4, v0x561eb717e250_0;
+    %load/vec4a v0x561eb71c5480, 4;
+    %assign/vec4 v0x561eb71c53c0_0, 0;
+    %jmp T_1;
+    .thread T_1;
+    .scope S_0x561eb71b4860;
+T_2 ;
+    %delay 1, 0;
+    %load/vec4 v0x561eb71c56b0_0;
+    %inv;
+    %assign/vec4 v0x561eb71c56b0_0, 0;
+    %jmp T_2;
+    .thread T_2;
+    .scope S_0x561eb71b4860;
+T_3 ;
+    %vpi_call 2 12 "$dumpfile", "rom.vcd" {0 0 0};
+    %vpi_call 2 13 "$dumpvars", 32'sb00000000000000000000000000000000, S_0x561eb71b4860 {0 0 0};
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x561eb71c56b0_0, 0, 1;
+    %pushi/vec4 0, 0, 21;
+    %store/vec4 v0x561eb71c55c0_0, 0, 21;
+    %pushi/vec4 500000, 0, 32;
+T_3.0 %dup/vec4;
+    %pushi/vec4 0, 0, 32;
+    %cmp/s;
+    %jmp/1xz T_3.1, 5;
+    %jmp/1 T_3.1, 4;
+    %pushi/vec4 1, 0, 32;
+    %sub;
+    %delay 2, 0;
+    %load/vec4 v0x561eb71c55c0_0;
+    %addi 1, 0, 21;
+    %assign/vec4 v0x561eb71c55c0_0, 0;
+    %jmp T_3.0;
+T_3.1 ;
+    %pop/vec4 1;
+    %vpi_call 2 21 "$finish" {0 0 0};
+    %end;
+    .thread T_3;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "rom_tb.v";
+    "rom.v";
