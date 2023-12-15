@@ -1,21 +1,19 @@
-# Display and VGA Core in Verilog
-In this Project I have written Verilog code for Display Core (display_core.v)\
-which generates VGA Signals (red, green, blue, hsync, vsync)\
-and these signals are taken into VGA Core(vga.v) for display
+# Display and VGA Core
 
-## Cropping an image into size 640 x 480
-This is done using crop.py\
-cropped.jpeg is produced
+This repository hosts a Display Core implemented in Verilog, capable of generating VGA signals conforming to VGA Standards (red, green, blue, hsync, vsync) in a 4-bit format RGB444. The core is designed to take a mem file as an image source in binary uncompressed format, where the mem file is generated using the Image Module Python package. The package accepts a cropped image (640x480) as input.
 
-## Binary File Generation
-This is done using bin.py\
-image.bin is produced
+## Features
 
-## Generation of VGA signals
-Done using display_core.v\
-Display Core takes pixeldata from image.bin(generated using bin.py)\
-and converts it and outputs vga signal
+- **VGA Signal Generation:** Generates VGA signals with standards-compliant parameters for red, green, blue, hsync, and vsync in a 4-bit RGB444 format.
 
-## Displaying VGA singals inputs in terminal
-Done using vga.v\
-VGA Core processes signals sent from display_core.v and displays the pixeldata in the terminal
+- **Image Source:** Utilizes a mem file in binary uncompressed format as an image source. This file is generated using the Image Module Python package.
+
+- **Decode Unit Testing:** A decode unit is implemented in Verilog HDL to verify the proper functioning of the core. It logs data, and Python scripts are used to compare the input image and output data to confirm the core's accuracy.
+
+## Tools and Technologies
+
+- Verilog
+- Python
+- Digital Design
+- Xilinx Vivado
+- Artix A7
